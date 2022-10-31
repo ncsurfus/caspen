@@ -1,6 +1,8 @@
 import pathlib
 import re
 import subprocess
+import json
+
 
 def get_image_digest(image_tag: str) -> str:
     output = subprocess.check_output(
@@ -21,6 +23,7 @@ def get_image_digest(image_tag: str) -> str:
             return config_digest
     raise Exception(f"{image_tag} digest not found!\n{output.decode('utf-8')}")
 
+    
 def update():
     content = pathlib.Path(".devcontainer/devcontainer.json").read_text("utf-8")
     repo, original_digest = re.search(r"image\":\s*\"([^\"]+)\"", content).group(1).split("@")
